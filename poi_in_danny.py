@@ -1,3 +1,6 @@
+# this is the master program that we run to execute all the necessary code 
+# including obstacle avoidance, poi distance calculation, etc
+
 import L2_log as log
 import time
 import numpy as np
