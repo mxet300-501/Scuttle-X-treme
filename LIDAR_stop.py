@@ -1,3 +1,6 @@
+# this progam makes scuttle drive forwards until object is detected, then back up and turn left or right if an object is detected
+
+
 # Import Internal Programs
 import L2_vector as vect
 import L2_speed_control as sc
