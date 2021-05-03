@@ -1,4 +1,5 @@
-# this progam makes scuttle drive forwards until object is detected, then back up and turn left or right if an object is detected
+# this progam makes scuttle drive forwards until object is detected, then back up and turn left or right if an object is detected.
+# it then repeats this process in an infinite loop, avoiding objects and driving forwards
 
 
 # Import Internal Programs
