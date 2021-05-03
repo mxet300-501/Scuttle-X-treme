@@ -1,3 +1,8 @@
+# basically the same as L2_heading but it will print out the min and max x/y values for calibration
+#it also spins the robot so that we dont have to do it manually
+
+
+
 # inverse_kinematics.py calculates wheel speeds from chassis speeds
 # Calculations will intake motion requests in [theta, x] (rad, m)
 # and output motion requests in [phi dot Left, pi dot right] (rad/s).
