@@ -3,6 +3,8 @@
 # some functions are not yet optimized to handle numpy [1x2] vectors directly.
 # Further functions will be added for rotation of vectors in various coordinate frames.
 
+#changes were made in getValid and getNearest to accomodate the LIDAR's upside-down position on the Scuttle frame
+
 # Import external libraries
 import numpy as np
 # from numpy import exp, abs, angle
