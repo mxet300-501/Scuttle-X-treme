@@ -1,6 +1,8 @@
 # speed_control.py takes target speeds and generates duty cycles
 # to send to motors, and has a function to execute PID control.
 
+# Changes were made to driveClosedLoop for the hope of more easily implementing the function in other codes
+
 # Import external libraries
 import numpy as np                                  # for handling arrays
 
