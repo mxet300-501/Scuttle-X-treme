@@ -1,6 +1,7 @@
 # this program will turn the robot 45° left or right depending on where the object it detected was
 # and go straight if nothing is detected
 # since we are using the compass to calculate changes, the math can get janky if it is turning from -175 to +160 for example
+# its the same as LIDAR_stop but uses the compass for turnig angle calculation :)
 
 # Import Internal Programs
 import L2_vector as vect
