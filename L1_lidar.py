@@ -6,6 +6,9 @@
 # Note: installation of pysicktim library is required for to run this program.
 # perform "sudo pip3 install pyusb," then "sudo pip3 install pysicktim"
 
+#Note: this code has been tampered with so that we could negate readings outside the semicircle in front of the LIDAR.
+# This way, we would not be detecting the aluminum frame when trying to avoid objects ahead.
+
 # Import external libraries
 import numpy as np                                  # for array handling
 import pysicktim as lidar                           # required for communication with TiM561 lidar sensor
