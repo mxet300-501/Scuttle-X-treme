@@ -1,3 +1,5 @@
+# this drives the robot to the poi but lacks the obstacle avoidance portion, it is just used so that other programs can call its functions
+
 import L2_log as log
 import time
 import numpy as np
