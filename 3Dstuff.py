@@ -1,3 +1,7 @@
+# This program measures the angle of the beagle bone in relation to its x, y, and z axes. 
+# The angle used to determine the robots angle around its axes is beta. The code will print 
+# whether the robot is facing up or down a slope and record the 2D component of its distance traveled.
+
 import L2_displacement as dis
 import numpy as np
 import time
