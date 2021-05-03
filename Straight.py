@@ -1,3 +1,6 @@
+#This code was an attempt to correct the robot's heading through reactive means on a chassis level basis
+#If the encoders read that the robot was veering right, it would actively turn left and vice versa
+
 import L2_displacement as dis
 import L2_speed_control as sc
 import L2_inverse_kinematics as inv
