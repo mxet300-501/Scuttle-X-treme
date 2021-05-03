@@ -1,3 +1,7 @@
+# This code calculates the angle alpha needed to turn to face the POI after obstacle avoidance. 
+# It sees an obstacle, backs up, turns, goes forwards, and then turns alpha° to face the poi again. 
+# "counter" is based off of whether the object was on the left or right.
+
 import math
 import numpy as np
 import poi as poi
