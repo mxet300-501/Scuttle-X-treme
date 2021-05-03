@@ -1,6 +1,10 @@
 # This program takes the encoder values from encoders, computes wheel movement
 # calculates the chassis displacement and continuously adds up the displacement
 # to indicate how much the robot has advanced, in meters.
+
+# The functions move_detect and forward_time were added in this code.
+# Also, the function named move was tampered with so that the robot would stop once it reached its POI
+
 import L2_vector as vect
 import L2_speed_control as sc
 import L2_inverse_kinematics as inv
