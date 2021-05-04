@@ -1,3 +1,7 @@
+# This code moves the robot forward while tracking its distance traveled, 
+# turns using the compass, and tracks its distance traveled during its 
+# evasive maneuvers around obstacles it detects
+
 import L2_log as log
 import time
 import numpy as np
