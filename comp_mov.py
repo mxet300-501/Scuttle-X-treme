@@ -1,90 +1,60 @@
-# inverse_kinematics.py calculates wheel speeds from chassis speeds
-# Calculations will intake motion requests in [theta, x] (rad, m)
-# and output motion requests in [phi dot Left, pi dot right] (rad/s).
-# This program runs on SCUTTLE with any CPU
+# This code is used as a test to determine whter the robot is capable of turning 
+# through the use of its compass, rather than the encoders.
 
-# Import external libraries
-import numpy as np                          # to perform matrix operations
+# import L2_log as log
+# import time
+import numpy as np
+# import L1_encoder as enc
+# import L2_kinematics as kin
+# import L2_speed_control as sc
+# import L2_inverse_kinematics as inv
+# import L2_vector as vect
+import L2_heading as head
 import time
 
-# Import internal programs
-import L1_gamepad as gp                     # to call getGP from gamepad
-
-# define robot geometry
-R = 0.041                                   # wheel radius
-L = 0.201                                   # half of the wheelbase
-A = np.array([[1/R, -L/R], [1/R, L/R]])     # matrix A * [xd, td] = [pdl, pdr]
-
-# define constraints for theta and x speeds
-max_xd = 0.4                                # maximum achievable x_dot (m/s) FW  translation
-max_td = (max_xd / L)                       # maximum achievable theta_dot (rad/s)
 
 
-def map_speeds(B):                          # this function will map the gamepad speeds to max values
-    B_mapped = np.zeros(2)
-    B_mapped[0] = max_xd*B[0]
-    B_mapped[1] = max_td*B[1]
-    return(B_mapped)
+C = 0
 
-
-def populate_gp():
-    gpData = gp.getGP()                     # when there is no controller input, update is empty
-    global axes                             # create a global variable for other programs to access
-    try:                                    # when update has no data, update.size DNE
-        if gpData.size == 16:               # if update has data, store it to axes
-            axes = gpData                   # now axes is a 16-element array
-    except:
-        pass
-
-    # assign axes from gamepad to requested velocities
-    x_dot = 1*axes[1]                      # assign forward axis, inverted
-    theta_dot = 1*axes[0]                  # assign L/R axis, inverted
-    B_raw = np.array([x_dot, theta_dot])    # form the B matrix
-    B = map_speeds(B_raw)                   # re map the values to within max achievable speeds
-    print("td:", B[1])
-    return(B)
-
-
-# Convert will take the "B" matrix containing [x_dot, theta_dot]
-# and return the C matrix containing [phi_dot_L, phi_dot_R]
-def convert(B):
-    C = np.matmul(A, -B)                     # matrix multiplication
-    C = np.round(C, decimals=3)             # round both elements in the array
-    return(C)
-
-
-def getPdTargets():
-    B = populate_gp()                       # retrieves targets in [xdot, thetadot] form
-    C = convert(B)                          # convert the targets to [pdl, pdr] form
-    C = np.clip(C, -9.7, 9.7)
-    return(C)
-
-
-# create a function that can convert an obstacle into an influence on theta dot
-def phi_influence(yValue):
-    limit = 0.30                                            # meters to limit influence
-    if (yValue < limit and yValue > 0):
-        theta_influence = max_td*0.7*(limit - yValue)       # give theta push only if object is near
-    elif (yValue > -limit and yValue < 0):
-        theta_influence = -1*max_td*0.7*(limit - yValue)    # give theta push only if object is near
-    else:
-        theta_influence = 0
-    B = np.array([0, theta_influence])
-    C = np.matmul(A, B)
-    return(C)
-
-
-# this function takes user input for x_dot and theta_dot
-def wait_user():
-    x_dot = input("please enter x_dot (m/s): ")                     # takes x_dot as user input
-    theta_dot = input("please enter theta_dot (rad/s): ")             # takes theta_dot as user input
-    return (float(x_dot) , float(theta_dot))                    # returns x_dot and theta_dot
-
-
-if __name__ == "__main__":
-    while True:
-        x_dot , theta_dot = wait_user()                     # user input [x_dot,theta_dot]
-        B = np.array([x_dot, theta_dot])                    # make user inputs into an array
-        phis = convert(B)                                   # convert [xd, td] to [pdl, pdr]
-        print("pdl",phis[0],"\tpdr",phis[1])                # print pdl & pdr
-        time.sleep(1)
+# def drive(xd,td, t):           #drive toward POI unless object detected
+#     myVelocities = np.array([xd, td]) #input your first pair
+#     myPhiDots = inv.convert(myVelocities)
+#     sc.driveOpenLoop(myPhiDots)
+#     time.sleep(t) # input your duration (s)
+    
+def turn(A):
+    axes = head.getXY()  
+    axesScaled = head.scale(axes) 
+    h1 = head.getHeading(axesScaled)                  # compute the heading
+    headingDegrees1 = round(h1*180/np.pi, 2)
+    print("h1: ", headingDegrees1)
+    if (A<0):
+        i = -1
+        j = 360
+        headingDegrees2 = 360
+        while((headingDegrees2 - headingDegrees1) > A):
+            #drive(0,i*2,0.001)
+            axes = head.getXY()  
+            axesScaled = head.scale(axes) 
+            h2 = head.getHeading(axesScaled)                  # compute the heading
+            headingDegrees2 = round(h2*180/np.pi, 2)
+            print("h2: ", headingDegrees2)
+            print("theta: ", headingDegrees2 - headingDegrees1)
+            time.sleep(0.01) 
+    elif(A>0):
+        i = 1
+        j = 0
+        headingDegrees2 = -360
+        while((headingDegrees2 - headingDegrees1) < A):
+            #drive(0,i*2,0.001)
+            axes = head.getXY()  
+            axesScaled = head.scale(axes) 
+            h2 = head.getHeading(axesScaled)                  # compute the heading
+            headingDegrees2 = round(h2*180/np.pi, 2)
+            print("h2: ", headingDegrees2)
+            print("theta: ", headingDegrees2 - headingDegrees1)
+            time.sleep(0.01) 
+    
+turn(-45)
+print("CLICK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+turn(45)
