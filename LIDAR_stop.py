@@ -1,5 +1,7 @@
-# this progam makes scuttle drive forwards until object is detected, then back up and turn left or right if an object is detected.
-# it then repeats this process in an infinite loop, avoiding objects and driving forwards
+# This progam makes scuttle drive forwards until object is detected, then back up and turn left or right if an object is detected.
+# It then repeats this process in an infinite loop, avoiding objects and driving forwards.
+# Mainly, this code represented a checkpoint in the programming of the final project; we could run this code to make sure
+# that the LIDAR, motors, and encoders were working as expected.
 
 
 # Import Internal Programs
